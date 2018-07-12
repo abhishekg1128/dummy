@@ -1,37 +1,18 @@
-artifactPublishingConfig:
-    host: 192.32.52.12
-    user: user53
-    credentialId: dummyGitRepo
-
-agent:
-    dockerImage: maven:3.5.3-jdk-8
-    args: -v /tmp:/tmp
-
-#buildResultPaths:
-#    - path-1
-
-testResultPaths:
-    - target/surefire-reports/*.xml
+agent: any
 
 findBugs: target/*.xml
 
 stages:
     - name: First
-      scripts:
-        -   ./scripts/hello
+      steps:
+        - sh: "./scripts/hello"
     - name: Build
-      scripts:
-        -   ./scripts/build
+      steps:
+        - sh: "./scripts/build"
     - name: Tests
-      scripts:
-        -   ./scripts/test
+      steps:
+        - sh: "./scripts/test"
 
 archiveArtifacts:
     - Jenkinsfile.yaml
     - scripts/hello.sh
-
-publishArtifacts:
-    - from: Jenkinsfile.yaml
-      to: ~/archives
-    - from: scripts/hello.sh
-      to: ~/archives
